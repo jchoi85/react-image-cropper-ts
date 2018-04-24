@@ -7,7 +7,7 @@ import "./ReactCrop.css";
 
 interface IFileSelectorCrop {
     onGetBlobFile: (blobFile: File) => void;
-    placeholderImage?: any; // optional placeholder image
+    placeholderImage?: string; // optional placeholder image
     aspect?: number; // optional aspect ratio requirement
     style?: React.CSSProperties; // optional style to apply to placeholder image and uploaded image
 }
