@@ -4,17 +4,19 @@ Example of a file upload component with crop functionality for React using Types
 <h1>Props</h1>
 <h4>onGetBlobFile: (blobFile: File) - (required)</h4>
 
-<div class="highlight highlight-source-js-jsx">
-    <pre>&lt;ReactImageCropperTs onGetBlobFile = {(blobFile: File) => console.log(blobFile)} /&gt;</pre>
-</div>
+<pre>
+&lt;ReactImageCropperTs onGetBlobFile = {(blobFile: File) => console.log(blobFile)} /&gt;
+</pre>
 
 Function to return blobFile for uploading. Function fires every time crop is complete. The blob file can be posted directly to AWS as FormData. Example usage:
 
-<div class="highlight highlight-source-js-jsx">
-    <pre>let formData = new FormData();
-        formData.append("img", blobFile);
-        axios.post(URL, formData, config?);</pre>
-</div>
+<pre>
+let formData = new FormData();
+
+formData.append("img", blobFile);
+
+axios.post(URL, formData, config?);
+</pre>
 
     onGetBlobFile: (blobFile: File) => void;
     placeholderImage?: any; // optional placeholder image
