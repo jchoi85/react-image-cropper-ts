@@ -7,8 +7,9 @@ import "./ReactCrop.css";
 
 interface IFileSelectorCrop {
     onGetBlobFile: (blobFile: File) => void;
-    placeholderImage?: any;
-    aspect?: number;
+    placeholderImage?: any; // optional placeholder image
+    aspect?: number; // optional aspect ratio requirement
+    style?: React.CSSProperties; // optional style to apply to placeholder image and uploaded image
 }
 
 interface IFileSelectorCropState {
@@ -21,10 +22,10 @@ interface IFileSelectorCropState {
 
 export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFileSelectorCropState>
 {
-    constructor(props: any) {
+    constructor(props: IFileSelectorCrop) {
         super(props);
         this.state = {
-            dataUrl: new URL("/", "https://developer.mozilla.org"),
+            dataUrl: new URL("/", "https://developer.mozilla.org"), // placeholder URL
             crop: {},
             fileName: "",
             upload: false,
@@ -38,7 +39,7 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
     }
 
     onImageLoaded = (image: any) => {
-        this.props.aspect ?
+        this.props.aspect ? // set initial crop values based on whether 
             this.setState({
                 crop: makeAspectCrop({
                     x: 25,
@@ -49,16 +50,16 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
             })
             :
             this.setState({
-                crop: makeAspectCrop({
+                crop: {
                     x: 25,
                     y: 25,
-                    width: 50
-                }, image.width / image.height),
+                    width: 50,
+                    height: 50,
+                },
             });
     }
 
     handleChange(selectorFiles: FileList) {
-        //console.log(selectorFiles);
         var fileReader = new FileReader();
         var data;
 
@@ -80,7 +81,7 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
         fileReader.readAsDataURL(selectorFiles[0]);
     }
 
-    //**dataURL to blob**
+    //**dataURL to blob** conversion
     dataURLtoBlobFile(dataurl: any) {
         var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -93,7 +94,7 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
     }
 
     onCropChange = (crop: any) => {
-        this.setState({ crop: crop });
+        this.setState({ crop });
     }
 
     //runs every time user drags in crop box
@@ -108,7 +109,6 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
         var image = new Image();
 
         image.src = URL.createObjectURL(blob);
-        //document.body.appendChild(image);
 
         //IMPORTANT: WAIT FOR IMAGE TO LOAD BEFORE TRYING TO CROP
         image.onload = () => {
@@ -125,13 +125,11 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
                 pixelCrop.height
             );
 
-            //
             new Promise((resolve, reject) => {
                 canvas.toBlob((file: any) => {
                     resolve(file);
                 }, 'image/jpeg');
             }).then(response => {
-                //console.log(response)
                 // send blobFile to parent
                 var blob = new Blob([response]);
                 var file = new File([blob], this.state.fileName);
@@ -141,16 +139,16 @@ export class ReactImageCropperTs extends React.Component<IFileSelectorCrop, IFil
         }
     }
 
-    fileUploadHandler(e: any) {
-        this.handleChange(e.target.files)
+    fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
+        if(e.target.files) this.handleChange(e.target.files);
     }
 
     render() {
-        //console.log(this.state)
         return (
             <React.Fragment>
                 <div className="row" style={{ margin: "auto" }}>
-                    {this.state.imgLoaded ? <ReactCrop src={this.state.dataUrl} crop={this.state.crop} onChange={this.onCropChange} onComplete={this.onComplete} onImageLoaded={this.onImageLoaded} style={{ maxHeight: "50vh" }} imageStyle={{ maxHeight: "50vh" }} /> : (this.props.placeholderImage ? <img src={this.props.placeholderImage} className="img-responsive center-block" /> : "")}
+                {/* show place holder image until file is uploaded */}
+                    {this.state.imgLoaded ? <ReactCrop src={this.state.dataUrl} crop={this.state.crop} onChange={this.onCropChange} onComplete={this.onComplete} onImageLoaded={this.onImageLoaded} imageStyle={this.props.style ? this.props.style : {}}  style={this.props.style ? this.props.style : {}} /> : (this.props.placeholderImage ? <img src={this.props.placeholderImage} className="img-responsive center-block" style={this.props.style ? this.props.style : {}} /> : "")}
                     <br />
                 </div>
                 <br />

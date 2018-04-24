@@ -19,7 +19,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <ReactImageCropperTs onGetBlobFile={this.onGetBlobFile} placeholderImage="" aspect={1} />
+        <ReactImageCropperTs onGetBlobFile={this.onGetBlobFile} placeholderImage="" style={{ maxHeight: "50vh", maxWidth: "50vw" }} />
       </div>
     );
   }
