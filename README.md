@@ -5,28 +5,8 @@ Example of a file upload component with crop functionality for React using Types
 <h4>onGetBlobFile: (blobFile: File) - (required)</h4>
 
 <div class="highlight highlight-source-js-jsx">
-    <pre>&lt;
-        <span class="pl-ent">
-            <span class="pl-c1">
-                ReactImageCropperTs
-            </span>
-        </span>
-        <span class="pl-e">
-            onGetBlobFile
-        </span>
-        <span class="pl-k">
-            =
-        </span>
-        <span class="pl-s">
-            <span class="pl-pds">
-                {
-            </span>
-            (blobFile: File) => console.log(blobFile)
-        <span class="pl-pds">
-                }
-        </span>
-    </span>
-        /&gt;
+    <pre>
+        &lt;ReactImageCropperTs onGetBlobFile = {(blobFile: File) => console.log(blobFile)} /&gt;
     </pre>
 </div>
 
@@ -34,50 +14,13 @@ Function to return blobFile for uploading. Function fires every time crop is com
 
 <div class="highlight highlight-source-js-jsx">
     <pre>
-        <span class="pl-ent">
-            <span class="pl-c1">
-                let
-            </span>
-        </span>
-        formData 
-        <span class="pl-k">
-            =
-        </span>
-       <span class="pl-ent">
-            <span class="pl-c1">
-                new
-            </span>
-        </span>
-         <span class="pl-e">
-            FormData()
-        </span>
-        ;
+        let formData = new FormData();
         <br />
         <br />
-        formData.append(
-        <span class="pl-k">
-            "img"
-        </span>
-        ,
-        <span class="pl-ent">
-            <span class="pl-c1">
-                blobFile
-            </span>
-        </span>
-        );
+        formData.append("img", blobFile);
         <br />
         <br />
-        axios.post(
-        <span class="pl-k">
-            URL
-        </span>
-        ,
-        <span class="pl-ent">
-            <span class="pl-c1">
-                formData
-            </span>
-        </span>
-        );
+        axios.post(URL, formData, config?);
     </pre>
 </div>
 
