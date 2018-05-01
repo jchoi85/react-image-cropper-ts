@@ -12,13 +12,17 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
     "@types/node": "^9.6.6",
     "@types/react": "^16.3.12",
     "@types/react-dom": "^16.0.5",
+    "gh-pages": "^1.1.0",
     "typescript": "^2.8.3"
-  }
+  },
+  "homepage": "https://jchoi85.github.io/react-image-cropper-ts"
 }

@@ -1,6 +1,8 @@
 <h1>React Image Cropper for React with Typescript</h1>
 Example of a file upload component with crop functionality for React using Typescript. Based on react-image-crop by DominicTobias.
 
+<a href="https://jchoi85.github.io/react-image-cropper-ts">demo link</a>
+
 <h1>Props</h1>
 <h4>onGetBlobFile: (blobFile: File) => void - (required)</h4>
 
